@@ -17,3 +17,4 @@ Pillow>=11.0
 python-dotenv
 gunicorn>=21.2.0
 gunicorn
+dj-database-url

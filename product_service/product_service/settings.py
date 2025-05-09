@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from dotenv import load_dotenv
+import dj_database_url
 load_dotenv()
 from pathlib import Path
 from datetime import timedelta
@@ -87,14 +88,9 @@ WSGI_APPLICATION = 'product_service.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'postgres'),
-        'USER': os.getenv('POSTGRES_USER', 'cn334Admin'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'cn334Admin'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '5432'),
-    }
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL')
+    )
 }
 
 
