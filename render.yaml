@@ -1,0 +1,43 @@
+services:
+  - type: web
+    name: reccomend-dorm-around-tu-product
+    env: python
+    buildCommand: |
+      cd product_service
+      pip install -r requirements.txt
+      python manage.py migrate
+      python manage.py collectstatic --noinput
+      python manage.py load_dorms
+    startCommand: gunicorn product_service.wsgi:application
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: database_finalProject
+          property: connectionString
+      - key: DJANGO_SETTINGS_MODULE
+        value: product_service.settings
+
+  - type: web
+    name: reccomend-dorm-around-tu-user
+    env: python
+    buildCommand: |
+      cd user_service
+      pip install -r requirements.txt
+      python manage.py migrate
+    startCommand: gunicorn user_service.wsgi:application
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: database_finalProject
+          property: connectionString
+      - key: DJANGO_SETTINGS_MODULE
+        value: user_service.settings
+
+  - type: web
+    name: reccomend-dorm-around-tu-frontend
+    env: static
+    buildCommand: |
+      cd app_frontend
+      npm install
+      npm run build
+    staticPublishPath: app_frontend/out
