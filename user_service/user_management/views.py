@@ -10,7 +10,6 @@ from user_management.serializers import CustomerSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import MyTokenObtainPairSerializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -46,4 +45,5 @@ class CustomerView(APIView):
         return Response(content)
 
 class MyTokenObtainPairView(TokenObtainPairView):
+    from .serializers import MyTokenObtainPairSerializer
     serializer_class = MyTokenObtainPairSerializer

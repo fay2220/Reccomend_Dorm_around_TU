@@ -13,7 +13,7 @@ export default function ZonePage() {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    fetch(`${baseUrl}/api/getAllDorm/`)
+    fetch(`${baseUrl}/getAllDorm/`)
       .then((res) => res.json())
       .then((data) => {
         const zoneDorms = data.data.filter((dorm) =>

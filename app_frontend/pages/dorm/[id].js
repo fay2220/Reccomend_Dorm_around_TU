@@ -13,7 +13,7 @@ export default function DormDetailPage() {
     if (!id) return;
   
     // โหลดข้อมูลหอพัก
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dorm/${id}/`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/dorm/${id}/`)
       .then(res => res.json())
       .then(data => setDorm(data));
   }, [id]);

@@ -82,15 +82,7 @@ WSGI_APPLICATION = 'user_service.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME":     os.environ.get("POSTGRES_NAME", "postgres"),
-        "USER":     os.environ.get("POSTGRES_USER", "postgres"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", ""),
-        "HOST":     os.environ.get("DB_HOST", "localhost"),
-        "PORT":     os.environ.get("DB_PORT", "5432"),
-        "ATOMIC_REQUESTS": True,     # สะดวกเวลามี error จะ rollback ให้อัตโนมัติ
-    }
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
 
 # Password validation
@@ -148,3 +140,5 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     # ไม่ต้องตั้ง AUDIENCE / ISSUER ถ้าไม่ใช้
 }
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
