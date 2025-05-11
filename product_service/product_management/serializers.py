@@ -7,7 +7,7 @@ class RoomImageSerializer(serializers.ModelSerializer):
         fields = ['image_url']
 
 class RoomTypeSerializer(serializers.ModelSerializer):
-    images = RoomImageSerializer(many=True)
+    images = RoomImageSerializer(many=True, required=False, allow_empty=True)
 
     class Meta:
         model = RoomType
@@ -45,17 +45,48 @@ class DormSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         images_data = validated_data.pop('images', [])
+        room_types_data = validated_data.pop('room_types', [])
 
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
 
-        old_images = list(instance.images.all())
-        for idx, image_data in enumerate(images_data):
-            if idx < len(old_images):
-                old_images[idx].image_url = image_data.get("image_url", old_images[idx].image_url)
-                old_images[idx].save()
+        #  อัปเดตรูปหอพัก
+        instance.images.all().delete()
+        for image_data in images_data:
+            DormImage.objects.create(dorm=instance, **image_data)
+
+        #  อัปเดต room types แบบตรวจสอบ id
+        existing_room_types = {rt.id: rt for rt in instance.room_types.all()}
+        updated_ids = []
+
+        for rt_data in room_types_data:
+            images = rt_data.pop('images', [])
+            rt_id = rt_data.get("id", None)
+
+            if rt_id and rt_id in existing_room_types:
+                # แก้ไขข้อมูลเก่า
+                rt = existing_room_types[rt_id]
+                for attr, value in rt_data.items():
+                    setattr(rt, attr, value)
+                rt.save()
+
+                #  อัปเดตรูปภาพห้อง
+                rt.images.all().delete()
+                for img in images:
+                    RoomImage.objects.create(room_type=rt, **img)
+
+                updated_ids.append(rt_id)
+
             else:
-                DormImage.objects.create(dorm=instance, **image_data)
+                #  เพิ่มใหม่
+                new_rt = RoomType.objects.create(dorm=instance, **rt_data)
+                for img in images:
+                    RoomImage.objects.create(room_type=new_rt, **img)
+
+        #  ลบ room types ที่ไม่ได้อยู่ในรายการอัปเดต
+        for rt_id, rt in existing_room_types.items():
+            if rt_id not in updated_ids:
+                rt.delete()
 
         return instance

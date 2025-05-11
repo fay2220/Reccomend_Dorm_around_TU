@@ -3,8 +3,9 @@
 export const dynamic = "force-dynamic";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import NavbarWithSidebar from "../components/NavbarWithSidebar";
+import NavbarWithSidebar from "../../components/NavbarWithSidebar";
 import Link from 'next/link';
+import BackButton from '../../components/BackButton';
 
 export default function ZonePage() {
   const [dorms, setDorms] = useState([]);
@@ -13,7 +14,7 @@ export default function ZonePage() {
   const baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    fetch(`${baseUrl}/getAllDorm/`)
+    fetch(`${baseUrl}/api/getAllDorm/`)
       .then((res) => res.json())
       .then((data) => {
         const zoneDorms = data.data.filter((dorm) =>
@@ -26,6 +27,7 @@ export default function ZonePage() {
   return (
     <div className="bg-white min-h-screen">
       <NavbarWithSidebar />
+      <BackButton />
       <h1 className="zone-title text-2xl font-bold mb-6 text-center">โซน {code}</h1>
   
       <div className="px-4 max-w-screen-xl mx-auto">

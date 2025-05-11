@@ -44,6 +44,8 @@ class CustomerView(APIView):
         }
         return Response(content)
 
+
+
 class MyTokenObtainPairView(TokenObtainPairView):
     from .serializers import MyTokenObtainPairSerializer
     serializer_class = MyTokenObtainPairSerializer

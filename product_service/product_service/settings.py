@@ -87,12 +87,35 @@ WSGI_APPLICATION = 'product_service.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': dj_database_url.config(conn_max_age=600)
+    
+# }
+
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'postgres'),
+        'USER': os.getenv('POSTGRES_USER', 'cn334Admin'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'cn334Admin'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
+    }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'database_finalproject',
+#         'USER': 'database_finalproject_user',
+#         'PASSWORD': 'TFDjk8wNLzyKg5mYb4O18qpuARuzaIBi',
+#         'HOST': 'dpg-d0f80padbo4c73bn3gag-a.singapore-postgres.render.com',
+#         'PORT': '5432',
+#         'OPTIONS': {
+#             'sslmode': 'require',
+#         }
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

@@ -81,9 +81,21 @@ WSGI_APPLICATION = 'user_service.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
+# }
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME":     os.environ.get("POSTGRES_NAME", "postgres"),
+        "USER":     os.environ.get("POSTGRES_USER", "postgres"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", ""),
+        "HOST":     os.environ.get("DB_HOST", "localhost"),
+        "PORT":     os.environ.get("DB_PORT", "5432"),
+        "ATOMIC_REQUESTS": True,     # สะดวกเวลามี error จะ rollback ให้อัตโนมัติ
+    }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators

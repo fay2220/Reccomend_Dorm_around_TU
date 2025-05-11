@@ -49,6 +49,7 @@ class DormDetailView(APIView):
 
     # ---------- PARTIAL UPDATE ----------
     def patch(self, request, pk, format=None):
+        permission_classes = [IsAuthenticated]  
         dorm = self.get_object(pk)
         serializer = DormSerializer(dorm, data=request.data, partial=True)
         if serializer.is_valid():
@@ -58,6 +59,7 @@ class DormDetailView(APIView):
 
     # ---------- FULL UPDATE ----------
     def put(self, request, pk, format=None):
+        permission_classes = [IsAuthenticated]  
         dorm = self.get_object(pk)
         serializer = DormSerializer(dorm, data=request.data)      # ต้องส่งทุก field
         if serializer.is_valid():
@@ -67,6 +69,7 @@ class DormDetailView(APIView):
 
     # ---------- DELETE ----------
     def delete(self, request, pk, format=None):
+        permission_classes = [IsAuthenticated]  
         dorm = self.get_object(pk)
         dorm.delete()
         return Response(
@@ -79,6 +82,7 @@ class DormDetailView(APIView):
         model = Dorm
         fields = '__all__'
     def update(self, instance, validated_data):
+        permission_classes = [IsAuthenticated]  
         images_data = validated_data.pop('images', [])
 
         # อัปเดต field ปกติอื่น ๆ
@@ -97,3 +101,19 @@ class DormDetailView(APIView):
                 old_image.save()
 
         return instance
+
+
+class DormByZoneView(APIView):
+    def get(self, request, zone):
+        dorms = Dorm.objects.filter(zone__iexact=zone)
+        serializer = DormSerializer(dorms, many=True)
+        return Response(serializer.data)
+
+@api_view(['DELETE'])
+def delete_room_type(request, pk):
+    try:
+        room_type = RoomType.objects.get(pk=pk)
+        room_type.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    except RoomType.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)

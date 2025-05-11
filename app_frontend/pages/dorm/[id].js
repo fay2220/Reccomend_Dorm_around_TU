@@ -1,7 +1,8 @@
 'use client';
 import { useEffect, useState ,useRef} from 'react';
 import { useRouter } from 'next/router';
-import NavbarWithSidebar from '../components/NavbarWithSidebar';
+import NavbarWithSidebar from '../../components/NavbarWithSidebar';
+import BackButton from '../../components/BackButton';
 
 export default function DormDetailPage() {
   const containerRef = useRef(null);
@@ -13,7 +14,7 @@ export default function DormDetailPage() {
     if (!id) return;
   
     // โหลดข้อมูลหอพัก
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/dorm/${id}/`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dorm/${id}/`)
       .then(res => res.json())
       .then(data => setDorm(data));
   }, [id]);
@@ -37,11 +38,12 @@ export default function DormDetailPage() {
     <div className="min-h-screen bg-[#f0fdf4] text-gray-900">
       <NavbarWithSidebar />
 
+
       {/* Header */}
       <div className="bg-gray-800 text-white py-5 px-4 text-center">
         <h1 className="text-4xl font-extrabold mb-3">{dorm.name}</h1>
       </div>
-
+      <BackButton />
       {/* Main Image */}
       {dorm.images[0] && (
         <div className="flex justify-center mt-6">
