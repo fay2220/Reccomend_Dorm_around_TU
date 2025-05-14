@@ -23,6 +23,10 @@ from rest_framework_simplejwt.views import (
 )
 from django.conf import settings          
 from django.conf.urls.static import static
+from order_management.views import InterestRequestSerializer,InterestRequestView
+from django.urls import path, include
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,5 +38,9 @@ urlpatterns = [
     path("api/dorm/<int:pk>/", DormDetailView.as_view(), name="dorm-detail"),
     path('zone/<str:zone>/', DormByZoneView.as_view(), name='dorms-by-zone'),
     path('api/roomtype/<int:pk>/', delete_room_type),
+    path('api/request-interest/', InterestRequestView.as_view(), name='request-interest'),
+    path('api/request-interest/<int:pk>/', InterestRequestView.as_view())
 ]
+    
+
 

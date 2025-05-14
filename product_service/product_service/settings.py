@@ -27,6 +27,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'product_service', 'media')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-q)d@zxjo28)dtwn9f_^xge^t*14)aoj!(sp^fzybd)dg&nd@$z'
+load_dotenv()  
+
+print("🔐 JWT_SIGNING_KEY = ", os.environ.get("JWT_SIGNING_KEY"))  # เช็กว่ามาไหม
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,6 +38,7 @@ ALLOWED_HOSTS = ['localhost',
     '127.0.0.1',
     'reccomend-dorm-around-tu-product.onrender.com',]
 CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
@@ -50,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
+    'order_management'
 ]
 
 MIDDLEWARE = [
@@ -84,13 +89,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'product_service.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': dj_database_url.config(conn_max_age=600)
-    
-# }
 
 DATABASES = {
     'default': {
@@ -102,20 +101,6 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'database_finalproject',
-#         'USER': 'database_finalproject_user',
-#         'PASSWORD': 'TFDjk8wNLzyKg5mYb4O18qpuARuzaIBi',
-#         'HOST': 'dpg-d0f80padbo4c73bn3gag-a.singapore-postgres.render.com',
-#         'PORT': '5432',
-#         'OPTIONS': {
-#             'sslmode': 'require',
-#         }
-#     }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -163,7 +148,7 @@ REST_FRAMEWORK = {
     'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
-# ★ ตั้งค่า SimpleJWT ให้ใช้คีย์เดียวกัน
+
 SIMPLE_JWT = {
     "SIGNING_KEY": os.environ.get("JWT_SIGNING_KEY"),  # ใช้จาก .env
     "ALGORITHM": "HS256",

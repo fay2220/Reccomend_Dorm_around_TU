@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,6 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-q)d@zxjo28)dtwn9f_^xge^t*14)aoj!(sp^fzybd)dg&nd@$z'
+load_dotenv()  # โหลดไฟล์ .env ที่อยู่ในโฟลเดอร์เดียวกับ settings.py
+
+print("🔐 JWT_SIGNING_KEY = ", os.environ.get("JWT_SIGNING_KEY"))  # เช็กว่ามาไหม
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -150,7 +154,7 @@ SIMPLE_JWT = {
     "ALGORITHM": "HS256",
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    # ไม่ต้องตั้ง AUDIENCE / ISSUER ถ้าไม่ใช้
+    
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

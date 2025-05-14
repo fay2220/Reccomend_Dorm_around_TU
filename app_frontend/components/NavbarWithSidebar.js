@@ -26,14 +26,17 @@ export default function NavbarWithSidebar() {
 
   const toggleSidebar = () => setSidebarActive(!sidebarActive);
   const closeSidebar = () => setSidebarActive(false);
-  const openRegister = () => {
-    setLoginOpen(false);
-    setRegisterOpen(true);
-  };
-  const closeRegister = () => setRegisterOpen(false);
   const openLogin = () => {
     setRegisterOpen(false);
     setLoginOpen(true);
+    setSidebarActive(false); 
+  };
+  const closeRegister = () => setRegisterOpen(false);
+ 
+  const openRegister = () => {
+    setLoginOpen(false);
+    setRegisterOpen(true);
+    setSidebarActive(false); 
   };
   const closeLogin = () => setLoginOpen(false);
 
@@ -147,8 +150,8 @@ export default function NavbarWithSidebar() {
       try {
         const decoded = jwtDecode(token);
         setCurrentUser(decoded.username);
-        setIsSuperUser(decoded.is_superuser === true);  // ตรวจสอบตรงนี้
-        console.log("🧠 loaded from localStorage:", decoded);
+        setIsSuperUser(decoded.is_superuser === true);  
+        console.log("loaded from localStorage:", decoded);
       } catch (e) {
         console.warn("JWT decode failed", e);
       }
@@ -179,17 +182,17 @@ export default function NavbarWithSidebar() {
                 <p className="mt-2 font-semibold">{currentUser}</p>
               </div>
               {/* เมนูสำหรับผู้ใช้ทั่วไป */}
-              <button className="bg-gray-200 text-black py-2 rounded mb-2 hover:bg-gray-300">
-                ดูสถานะคำร้อง
-              </button>
+              <Link href={isSuperUser ? "/admin" : "/client"}>
+                <button className="bg-gray-200 text-black py-2 rounded mb-2 hover:bg-gray-300 w-full text-center">
+                  ดูสถานะคำร้อง
+                </button>
+              </Link>
               
               {/* เมนูเพิ่มเติมสำหรับผู้ดูแลระบบ (แสดงเมื่อเป็น superuser) */}
               {console.log("Current state: user =", currentUser, "super =", isSuperUser)}
               {isSuperUser && (
                     <>
-                        <button className="sidebar-button bg-yellow-500 hover:bg-yellow-600 text-white">
-                        แดชบอร์ด
-                        </button>
+                      
                         <Link href="/dorm/manage">
                           <button className="sidebar-button bg-blue-500 hover:bg-blue-600 text-white" >
                           แก้ไขรายละเอียดหอพัก

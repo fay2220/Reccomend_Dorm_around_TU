@@ -25,7 +25,7 @@ export default function Home() {
 
       {/*  ส่วนหัวข้อโซนหอพัก พร้อมเส้นคั่น */}
       <div className="border-b border-gray-300 mb-4 mx-6 text-center">
-        <h2 className="text-2xl font-bold mb-4">โซนหอพัก</h2>
+        <h2 className="text-3xl font-bold mb-4">โซนหอพัก</h2>
       </div>
 
       <section className="dorm-grid px-6">

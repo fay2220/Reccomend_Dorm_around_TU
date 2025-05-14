@@ -39,6 +39,8 @@ class CustomerView(APIView):
     def get(self, request, format=None):
         customer_data = Customer.objects.get(user=request.user)
         customer_serializer = CustomerSerializer(customer_data)
+        print("🔐 Request headers:", request.headers)
+        print("👤 Authenticated user:", request.user)
         content = {
     '       data': customer_serializer.data
         }
@@ -49,3 +51,6 @@ class CustomerView(APIView):
 class MyTokenObtainPairView(TokenObtainPairView):
     from .serializers import MyTokenObtainPairSerializer
     serializer_class = MyTokenObtainPairSerializer
+
+
+

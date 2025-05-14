@@ -17,7 +17,10 @@ staticfiles/
 local_settings.py
 user_service/user_service/settings.py
 product_service/product_service/settings.py
-
+/product_service/product_service/settings.py
+/user_service/user_service/settings.py
+/user_service/user_service/.env
+user_service/user_service/.env
 # --------------------------
 #  สำหรับ FRONTEND (Next.js)
 # --------------------------
@@ -32,6 +35,8 @@ yarn-error.log
 .env.local
 .env.*.local
 app_frontend/.env
+/app_frontend/.env
+/product_service/product_service/.env
 
 # --------------------------
 #  ทั่วไป

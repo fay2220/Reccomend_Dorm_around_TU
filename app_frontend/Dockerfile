@@ -14,6 +14,7 @@ RUN \
 COPY . .
 
 RUN npm run build
+RUN npm install axios
 
 
 EXPOSE 3000
