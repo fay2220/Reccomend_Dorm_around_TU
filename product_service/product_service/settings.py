@@ -25,15 +25,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'product_service', 'media')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-q)d@zxjo28)dtwn9f_^xge^t*14)aoj!(sp^fzybd)dg&nd@$z'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost',
     '127.0.0.1',
-    'reccomend-dorm-around-tu-product.onrender.com',]
+    'reccomend-dorm-around-tu-product.onrender.com',
+    'https://reccomend-dorm-around-tu-frontend-5cqq.onrender.com']
 CORS_ALLOW_ALL_ORIGINS = True
 
 
