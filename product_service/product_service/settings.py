@@ -28,6 +28,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'product_service', 'media')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = str(os.getenv("SECRET_KEY", "fallback-secret-key"))
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost',
