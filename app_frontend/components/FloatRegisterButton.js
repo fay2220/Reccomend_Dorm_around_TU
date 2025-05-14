@@ -32,7 +32,7 @@ export default function FloatingRegisterButton() {
 
   useEffect(() => {
     if (zone) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/zone/${zone}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/zone/${zone}/`)
         .then(res => res.json())
         .then(data => setDorms(data))
         .catch(err => console.error("โหลดหอพักล้มเหลว:", err));
