@@ -73,7 +73,7 @@ export default function DormDetailPage() {
                 
                 <div className="flex flex-wrap gap-4 mt-4">
                   {room.images.map((img, j) => (
-                    <div key={j} className="w-full sm:w-[500px] h-[350px] relative">
+                    <div key={j} className="w-full sm:w-[500px] aspect-[4/3] relative rounded overflow-hidden">
                       <Image
                         src={img.image_url}
                         alt={`room ${j}`}
