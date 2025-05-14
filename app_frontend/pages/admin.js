@@ -53,7 +53,7 @@ export default function AdminRequestPage() {
   const fetchRequests = async () => {
     const token = localStorage.getItem("accessToken");
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/request-interest/`, {
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/request-interest/`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log("Fetched requests:", res.data);
@@ -65,8 +65,8 @@ export default function AdminRequestPage() {
 
   const fetchDorms = async () => {
     try {
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/getAllDorm/`);
-      console.log("🏠 Fetched dorms:", res.data);
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/getAllDorm/`);
+      console.log("Fetched dorms:", res.data);
       setDorms(res.data);
     } catch (err) {
       console.error(" Error fetching dorms:", err);
@@ -114,7 +114,7 @@ export default function AdminRequestPage() {
       const updated = await Promise.all(
         requests.map(async (r) => {
           try {
-            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/dorm/${r.dorm_id}/`);
+            const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/dorm/${r.dorm_id}/`);
             return { ...r, dorm_name: res.data.name };
           } catch {
             return { ...r, dorm_name: "ไม่พบชื่อหอ" };
