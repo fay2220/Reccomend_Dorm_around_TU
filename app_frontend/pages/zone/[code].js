@@ -35,10 +35,10 @@ export default function ZonePage() {
     <div className="px-4 max-w-screen-xl mx-auto">
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
         {dorms.map((dorm) => (
-          <Link
+         <Link
             href={`/dorm/${dorm.id}`}
             key={dorm.id}
-            className="zone-card relative block w-full max-w-[270px] bg-white rounded-xl shadow min-h-[340px] flex flex-col justify-between"
+            className="zone-card relative block w-full max-w-[270px] bg-white rounded-xl shadow overflow-hidden"
           >
             <div className="aspect-[4/3] w-full relative rounded-t-xl overflow-hidden">
               <img
@@ -47,10 +47,10 @@ export default function ZonePage() {
                 className="zone-img object-cover w-full h-full"
               />
             </div>
-            <div className="p-3">
-              <p className="zone-card-name text-base font-bold">{dorm.name}</p>
+            <div className="px-3 py-4">
+              <p className="zone-card-name text-sm font-bold text-center truncate">{dorm.name}</p>
               {dorm.room_types?.length > 0 && (
-                <div className="zone-card-price text-sm text-gray-700 font-medium mt-1 text-right">
+                <div className="zone-card-price text-xs text-gray-700 font-medium text-center mt-1">
                   เริ่มต้น {parseFloat(dorm.room_types[0].price_per_month).toLocaleString()} บาท / เดือน
                 </div>
               )}
