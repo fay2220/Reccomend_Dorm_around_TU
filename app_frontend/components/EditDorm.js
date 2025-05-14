@@ -24,7 +24,7 @@ export default function EditDormForm() {
 
   useEffect(() => {
     if (selectedDormId) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dorm/${selectedDormId}/`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/dorm/${selectedDormId}/`)
         .then((res) => {
           if (!res.ok) throw new Error('Dorm not found');
           return res.json();
@@ -109,7 +109,7 @@ export default function EditDormForm() {
       room_types: cleanedRoomTypes,
     };
   
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dorm/${selectedDormId}/`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dorm/${selectedDormId}/`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -122,7 +122,7 @@ export default function EditDormForm() {
 
   const handleDelete = async () => {
     if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบหอพักนี้?')) {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dorm/${selectedDormId}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dorm/${selectedDormId}`, {
         method: 'DELETE',
       });
       alert('ลบสำเร็จ');
@@ -134,7 +134,7 @@ export default function EditDormForm() {
   
     // ถ้ามี id แสดงว่าเป็นของใน database → เรียก API ลบก่อน
     if (room.id) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/roomtype/${room.id}/`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/roomtype/${room.id}/`, {
         method: 'DELETE',
       })
         .then((res) => {
