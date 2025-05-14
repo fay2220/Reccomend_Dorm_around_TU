@@ -145,18 +145,27 @@ export default function NavbarWithSidebar() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      try {
-        const decoded = jwtDecode(token);
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    try {
+      const decoded = jwtDecode(token);
+
+      const currentTime = Date.now() / 1000; 
+      if (decoded.exp < currentTime) {
+        // Token หมดอายุ
+        console.warn("Token expired, logging out...");
+        handleLogout();
+      } else {
         setCurrentUser(decoded.username);
-        setIsSuperUser(decoded.is_superuser === true);  
+        setIsSuperUser(decoded.is_superuser === true);
         console.log("loaded from localStorage:", decoded);
-      } catch (e) {
-        console.warn("JWT decode failed", e);
       }
+    } catch (e) {
+      console.warn("JWT decode failed", e);
+      handleLogout(); 
     }
-  }, []);
+  }
+}, []);
   return (
     <>
       {/* Success Toast ข้อความแจ้งเตือนเมื่อทำงานสำเร็จ */}
