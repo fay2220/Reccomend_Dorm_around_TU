@@ -1,5 +1,5 @@
 # --------------------------
-# 🔥 สำหรับ BACKEND (Django)
+# สำหรับ BACKEND (Django)
 # --------------------------
 *.pyc
 __pycache__/
@@ -15,9 +15,11 @@ venv/
 *.egg-info/
 staticfiles/
 local_settings.py
+user_service/user_service/settings.py
+product_service/product_service/settings.py
 
 # --------------------------
-# ⚡ สำหรับ FRONTEND (Next.js)
+#  สำหรับ FRONTEND (Next.js)
 # --------------------------
 node_modules/
 .next/
@@ -29,9 +31,10 @@ yarn-error.log
 .env
 .env.local
 .env.*.local
+app_frontend/.env
 
 # --------------------------
-# 🧪 ทั่วไป
+#  ทั่วไป
 # --------------------------
 .DS_Store
 *.swp
