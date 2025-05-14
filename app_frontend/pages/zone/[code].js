@@ -26,39 +26,42 @@ export default function ZonePage() {
       });
   }, [code, baseUrl]);
 
- return (
-  <div className="bg-white min-h-screen">
-    <NavbarWithSidebar />
-    <BackButton />
-    <h1 className="zone-title text-2xl font-bold mb-6 text-center">โซน {code}</h1>
+  return (
+    <div className="bg-white min-h-screen">
+      <NavbarWithSidebar />
+      <BackButton />
+      <h1 className="zone-title text-2xl font-bold mb-6 text-center">โซน {code}</h1>
 
-    <div className="px-4 max-w-screen-xl mx-auto">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
-        {dorms.map((dorm) => (
-         <Link
-            href={`/dorm/${dorm.id}`}
-            key={dorm.id}
-            className="zone-card relative block w-full max-w-[270px] bg-white rounded-xl shadow overflow-hidden"
-          >
-            <div className="aspect-[4/3] w-full relative rounded-t-xl overflow-hidden">
-              <img
-                src={dorm.images[0]?.image_url}
-                alt={dorm.name}
-                className="zone-img object-cover w-full h-full"
-              />
-            </div>
-            <div className="px-3 py-4">
-              <p className="zone-card-name text-sm font-bold text-center truncate">{dorm.name}</p>
-              {dorm.room_types?.length > 0 && (
-                <div className="zone-card-price text-xs text-gray-700 font-medium text-center mt-1">
-                  เริ่มต้น {parseFloat(dorm.room_types[0].price_per_month).toLocaleString()} บาท / เดือน
-                </div>
-              )}
-            </div>
-          </Link>
-        ))}
+      <div className="px-4 max-w-screen-xl mx-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 justify-items-center">
+          {dorms.map((dorm) => (
+            <Link
+              href={`/dorm/${dorm.id}`}
+              key={dorm.id}
+              className="zone-card block w-full max-w-[250px] bg-white rounded-xl shadow overflow-hidden hover:shadow-lg transition"
+            >
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src={dorm.images[0]?.image_url || "/fallback.jpg"}
+                  alt={dorm.name}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 250px"
+                  priority
+                />
+              </div>
+              <div className="p-3 text-center space-y-1">
+                <p className="text-base font-bold leading-tight">{dorm.name}</p>
+                {dorm.room_types?.length > 0 && (
+                  <p className="text-sm text-gray-700">
+                    เริ่มต้น {parseFloat(dorm.room_types[0].price_per_month).toLocaleString()} บาท / เดือน
+                  </p>
+                )}
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
 }
