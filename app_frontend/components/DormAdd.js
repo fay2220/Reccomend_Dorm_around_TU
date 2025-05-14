@@ -106,7 +106,7 @@ export default function AddDormForm({ mode = 'add', initialData = null }){
   
       console.log(' Submitting:', payload);
   
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/registerDorm/`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/registerDorm/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
