@@ -13,7 +13,7 @@ export default function DormDetailPage() {
 
   useEffect(() => {
     if (!id) return;
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dorm/${id}/`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/dorm/${id}/`)
       .then(res => res.json())
       .then(data => setDorm(data));
   }, [id]);
@@ -52,14 +52,14 @@ export default function DormDetailPage() {
 
       <div className="max-w-6xl mx-auto px-4 py-10 space-y-10">
         <div className="bg-white rounded-xl shadow p-6">
-          <h2 className="text-2xl font-bold mb-4">🏡 รายละเอียดหอพัก</h2>
+          <h2 className="text-2xl font-bold mb-4">รายละเอียดหอพัก</h2>
           <div className="p-4 border rounded-xl">
             <p className="text-lg max-w-4xl mx-auto">{dorm.description}</p>
           </div>
         </div>
 
         <div className="bg-white rounded-xl shadow p-6">
-          <h2 className="text-2xl font-bold mb-4">💡 ประเภทห้องพัก</h2>
+          <h2 className="text-2xl font-bold mb-4">ประเภทห้องพัก</h2>
           <div className="space-y-6">
             {dorm.room_types.map((room, i) => (
               <div key={i} className="p-4 border rounded-xl">
