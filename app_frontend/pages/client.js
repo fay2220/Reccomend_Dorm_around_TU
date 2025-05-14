@@ -12,40 +12,44 @@ export default function ClientStatusPage() {
   const router = useRouter();
 
   useEffect(() => {
-    const fetchUserAndRequests = async () => {
-      try {
-        const token = localStorage.getItem('accessToken');
-        if (!token) {
-          console.warn('No token found. Redirecting...');
-          router.push('/');
-          return;
-        }
-
-        const decoded = jwtDecode(token);
-        console.log('Decoded JWT:', decoded);
-        const currentUsername = decoded.username;
-        setUser({ username: currentUsername });
-
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/request-interest/`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        console.log('All requests =>', res.data);
-
-        const filtered = res.data.filter((req) => req.username === currentUsername);
-        console.log('Filtered requests for user:', filtered);
-
-        setRequests(filtered);
-      } catch (err) {
-        console.error('Error fetching data:', err);
+  const fetchUserAndRequests = async () => {
+    try {
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        console.warn('No token found. Redirecting...');
         router.push('/');
+        return;
       }
-    };
 
-    fetchUserAndRequests();
-  }, [router]);
+      const decoded = jwtDecode(token);
+      const currentTime = Math.floor(Date.now() / 1000);
+      if (decoded.exp < currentTime) {
+        console.warn('Token expired. Logging out...');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        router.push('/');
+        return;
+      }
+
+      const currentUsername = decoded.username;
+      setUser({ username: currentUsername });
+
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/request-interest/`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const filtered = res.data.filter((req) => req.username === currentUsername);
+      setRequests(filtered);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      router.push('/');
+    }
+  };
+
+  fetchUserAndRequests();
+}, [router]);
 
   return (
     <div
