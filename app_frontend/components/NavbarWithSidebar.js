@@ -60,6 +60,7 @@ export default function NavbarWithSidebar() {
       if (res.ok) {
         // เก็บ token ลง localStorage
         localStorage.setItem("accessToken", data.access);
+        console.log("New token set:", data.access);
         localStorage.setItem("refreshToken", data.refresh);
   
         // Decode JWT เพื่อดูว่าเป็น superuser หรือไม่
