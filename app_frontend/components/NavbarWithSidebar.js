@@ -49,7 +49,7 @@ export default function NavbarWithSidebar() {
   const submitLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${userUrl}/api/token/`, {
+      const res = await fetch(`${userUrl}/token/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -111,7 +111,7 @@ export default function NavbarWithSidebar() {
     const lastname = rest.join(' ').trim();
 
     try {
-      const res = await fetch(`${userUrl}/api/register/`, {
+      const res = await fetch(`${userUrl}/register/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
