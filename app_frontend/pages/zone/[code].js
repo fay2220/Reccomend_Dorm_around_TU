@@ -16,7 +16,7 @@ export default function ZonePage() {
 
   useEffect(() => {
     if (!code) return;
-    fetch(`${baseUrl}/api/getAllDorm/`)
+    fetch(`${baseUrl}/getAllDorm/`)
       .then((res) => res.json())
       .then((data) => {
         const zoneDorms = data.data.filter((dorm) =>
