@@ -35,7 +35,7 @@ export default function FloatingRegisterButton() {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/zone/${zone}`)
         .then(res => res.json())
         .then(data => setDorms(data))
-        .catch(err => console.error("❌ โหลดหอพักล้มเหลว:", err));
+        .catch(err => console.error("โหลดหอพักล้มเหลว:", err));
     } else {
       setDorms([]);
     }
@@ -48,7 +48,7 @@ export default function FloatingRegisterButton() {
   const handleSubmit = async () => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      alert('❌ กรุณาเข้าสู่ระบบก่อนส่งข้อมูล');
+      alert('กรุณาเข้าสู่ระบบก่อนส่งข้อมูล');
       return;
     }
 
@@ -61,7 +61,7 @@ export default function FloatingRegisterButton() {
     };
 
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/request-interest/`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/request-interest/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,18 +71,18 @@ export default function FloatingRegisterButton() {
       });
 
       if (res.ok) {
-        alert('✅ ส่งคำร้องสำเร็จ');
+        alert('ส่งคำร้องสำเร็จ');
         setIsOpen(false);
         const goHome = confirm('กลับหน้าแรกหรือไม่? กด "ยกเลิก" เพื่อดูสถานะ');
         router.push(goHome ? '/' : '/client');
       } else {
         const err = await res.json();
-        console.error("❌ ส่งคำร้องล้มเหลว:", err);
-        alert('❌ ส่งคำร้องไม่สำเร็จ: ' + JSON.stringify(err));
+        console.error("ส่งคำร้องล้มเหลว:", err);
+        alert('ส่งคำร้องไม่สำเร็จ: ' + JSON.stringify(err));
       }
     } catch (err) {
-      console.error("❌ เกิดข้อผิดพลาด:", err);
-      alert("❌ ไม่สามารถส่งข้อมูลได้");
+      console.error("เกิดข้อผิดพลาด:", err);
+      alert("ไม่สามารถส่งข้อมูลได้");
     }
   };
 
