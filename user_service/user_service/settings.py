@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 from datetime import timedelta
+import dj_database_url
 from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,16 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-q)d@zxjo28)dtwn9f_^xge^t*14)aoj!(sp^fzybd)dg&nd@$z'
-load_dotenv()  # โหลดไฟล์ .env ที่อยู่ในโฟลเดอร์เดียวกับ settings.py
-
-print("🔐 JWT_SIGNING_KEY = ", os.environ.get("JWT_SIGNING_KEY"))  # เช็กว่ามาไหม
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+SECRET_KEY = str(os.getenv("SECRET_KEY", "fallback-secret-key"))
+ALLOWED_HOSTS = ['localhost',
+    '127.0.0.1',
+    os.getenv('RENDER_EXTERNAL_HOSTNAME'),  
+    'reccomend-dorm-around-tu-backend.onrender.com',  ]
 CORS_ALLOW_ALL_ORIGINS = True
 
 
@@ -85,20 +85,10 @@ WSGI_APPLICATION = 'user_service.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
-# }
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME":     os.environ.get("POSTGRES_NAME", "postgres"),
-        "USER":     os.environ.get("POSTGRES_USER", "postgres"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", ""),
-        "HOST":     os.environ.get("DB_HOST", "localhost"),
-        "PORT":     os.environ.get("DB_PORT", "5432"),
-        "ATOMIC_REQUESTS": True,     # สะดวกเวลามี error จะ rollback ให้อัตโนมัติ
-    }
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
 }
+
 
 
 # Password validation
@@ -150,11 +140,13 @@ REST_FRAMEWORK = {
 
 # ★ ตั้งค่า SimpleJWT ให้ใช้คีย์เดียวกัน
 SIMPLE_JWT = {
-    "SIGNING_KEY": os.environ.get("JWT_SIGNING_KEY"),  # ใช้จาก .env
+    "SIGNING_KEY": SECRET_KEY,  # ใช้จาก .env
     "ALGORITHM": "HS256",
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
-    
+    # ไม่ต้องตั้ง AUDIENCE / ISSUER ถ้าไม่ใช้
 }
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+message.txt
+5 KB
