@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'product_management',
     'rest_framework',
     'corsheaders',
+    'order_management', 
     'rest_framework_simplejwt',
 ]
 
