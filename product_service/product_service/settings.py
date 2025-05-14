@@ -1,33 +1,4 @@
-fay
-fayy112
-•
-hentai
 
-fay — 22/5/65 12:41
-ภาพ
-fay — 22/5/65 12:49
-ภาพ
-คณิต -​สถิติ สูตร
-fay — 30/10/67 17:11
-ประเภทไฟล์ที่แนบ: spreadsheet
-takehome.xlsx
-1.96 MB
-fay — 30/10/67 18:06
-ประเภทไฟล์ที่แนบ: spreadsheet
-takehomeedit.xlsx
-1.95 MB
-fay — 02:42
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  images: {
-    unoptimized: true, 
-  },
-
-};
-
-module.exports = nextConfig;
-fay — 04:12
 """
 Django settings for user_service project.
 
