@@ -36,7 +36,7 @@ urlpatterns = [
     path('api/getAllDorm/',DormView.as_view()),
     path('api/dorm/<int:pk>/', DormDetailView.as_view()),
     path("api/dorm/<int:pk>/", DormDetailView.as_view(), name="dorm-detail"),
-    path('zone/<str:zone>/', DormByZoneView.as_view(), name='dorms-by-zone'),
+    path('api/zone/<str:zone>/', DormByZoneView.as_view(), name='dorms-by-zone'),
     path('api/roomtype/<int:pk>/', delete_room_type),
     path('api/request-interest/', InterestRequestView.as_view(), name='request-interest'),
     path('api/request-interest/<int:pk>/', InterestRequestView.as_view())
