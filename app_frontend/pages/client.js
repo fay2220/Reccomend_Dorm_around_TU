@@ -26,7 +26,7 @@ export default function ClientStatusPage() {
         const currentUsername = decoded.username;
         setUser({ username: currentUsername });
 
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/request-interest/`, {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/request-interest/`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
