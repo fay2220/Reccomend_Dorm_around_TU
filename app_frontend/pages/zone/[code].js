@@ -38,7 +38,7 @@ export default function ZonePage() {
           <Link
             href={`/dorm/${dorm.id}`}
             key={dorm.id}
-            className="zone-card relative block w-full max-w-[270px] bg-white rounded-xl shadow"
+            className="zone-card relative block w-full max-w-[270px] bg-white rounded-xl shadow min-h-[340px] flex flex-col justify-between"
           >
             <div className="aspect-[4/3] w-full relative rounded-t-xl overflow-hidden">
               <img
