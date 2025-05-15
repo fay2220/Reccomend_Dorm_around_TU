@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import BackButton from './BackButton';
 
-export default function AddDormForm({ mode = 'add', initialData = null }){
+export default function AddDormForm({ mode = 'add', initialData = null }) {
   const [dorm, setDorm] = useState({
     name: '',
     zone: '',
@@ -98,38 +98,41 @@ export default function AddDormForm({ mode = 'add', initialData = null }){
       const payload = {
         ...dorm,
         images: dorm.images.map((url) => ({ image_url: url })),
-        room_types: dorm.room_types.map((room) => ({
+        room_types: dorm.room_types.map(({ id, ...room }) => ({
           ...room,
           images: room.images.map((url) => ({ image_url: url })),
         })),
       };
-  
-      console.log(' Submitting:', payload);
-  
+
+      console.log('Submitting:', payload);
+
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/registerDorm/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-  
+
       if (!res.ok) {
         const errorText = await res.text();
         throw new Error(errorText);
       }
-  
+
       alert('บันทึกสำเร็จ');
-      // กลับไปหน้าเลือก zone/dorm หรือเคลียร์ form
     } catch (err) {
-      console.error(' Submission Error:', err);
+      console.error('Submission Error:', err);
       alert('เกิดข้อผิดพลาดขณะบันทึก');
     }
   };
 
   useEffect(() => {
     if (initialData) {
-      setDorm(initialData); 
+      const sanitized = {
+        ...initialData,
+        room_types: initialData.room_types.map(({ id, ...r }) => r),
+      };
+      setDorm(sanitized);
     }
-  }, [initialData]); ;
+  }, [initialData]);
 
   return (
     <div className="bg-white min-h-screen">
@@ -292,11 +295,11 @@ export default function AddDormForm({ mode = 'add', initialData = null }){
 
         <div className="flex justify-end gap-3">
           <button
-              type="button"
-              className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
-              onClick={() => router.back()} // หรือ redirect ไป path ที่เหมาะสม เช่น /dorm/manage
-            >
-              ยกเลิก
+            type="button"
+            className="px-4 py-2 bg-gray-300 text-gray-800 rounded-md hover:bg-gray-400"
+            onClick={() => router.back()}
+          >
+            ยกเลิก
           </button>
           <button
             type="button"
