@@ -94,35 +94,36 @@ export default function AddDormForm({ mode = 'add', initialData = null }) {
   };
 
   const handleSubmit = async () => {
-    try {
-      const payload = {
-        ...dorm,
-        images: dorm.images.map((url) => ({ image_url: url })),
-        room_types: dorm.room_types.map(({ id, ...room }) => ({
-          ...room,
-          images: room.images.map((url) => ({ image_url: url })),
-        })),
-      };
+  try {
+    const { id, ...cleanDorm } = dorm;  // ✅ ตัด id ออก
+    const payload = {
+      ...cleanDorm,
+      images: cleanDorm.images.map((url) => ({ image_url: url })),
+      room_types: cleanDorm.room_types.map(({ id, ...room }) => ({
+        ...room,
+        images: room.images.map((url) => ({ image_url: url })),
+      })),
+    };
 
-      console.log('Submitting:', payload);
+    console.log('Submitting:', payload);
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/registerDorm/`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/registerDorm/`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(errorText);
-      }
-
-      alert('บันทึกสำเร็จ');
-    } catch (err) {
-      console.error('Submission Error:', err);
-      alert('เกิดข้อผิดพลาดขณะบันทึก');
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(errorText);
     }
-  };
+
+    alert('บันทึกสำเร็จ');
+  } catch (err) {
+    console.error('Submission Error:', err);
+    alert('เกิดข้อผิดพลาดขณะบันทึก');
+  }
+};
 
   useEffect(() => {
     if (initialData) {
