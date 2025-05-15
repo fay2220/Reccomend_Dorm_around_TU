@@ -145,7 +145,7 @@ REST_FRAMEWORK = {
 }
 # ★ ตั้งค่า SimpleJWT ให้ใช้คีย์เดียวกัน
 SIMPLE_JWT = {
-    "SIGNING_KEY": os.environ.get("JWT_SIGNING_KEY"),  # ใช้จาก .env
+    "SIGNING_KEY": SECRET_KEY
     "ALGORITHM": "HS256",
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
