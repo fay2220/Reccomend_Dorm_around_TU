@@ -17,6 +17,7 @@ class DormImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = DormImage
         fields = ['image_url']
+        read_only_fields = ['id']
 
 class DormSerializer(serializers.ModelSerializer):
     images = DormImageSerializer(many=True)
