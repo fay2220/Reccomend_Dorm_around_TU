@@ -43,12 +43,18 @@ class InterestRequestView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        if not request.user or not request.user.is_authenticated:
+            return Response({'error': 'Authentication required'}, status=401)
+    
         serializer = InterestRequestSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user) 
-            return Response(serializer.data, status=201)
+            try:
+                serializer.save(user=request.user)
+                return Response(serializer.data, status=201)
+            except Exception as e:
+                print("Save failed:", e)
+                return Response({'error': str(e)}, status=500)
         return Response(serializer.errors, status=400)
-    
     def patch(self, request, pk):  
         try:
             instance = InterestRequest.objects.get(pk=pk)
