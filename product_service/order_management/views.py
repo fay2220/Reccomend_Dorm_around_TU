@@ -29,9 +29,9 @@ class InterestRequestView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        serializer = InterestRequestSerializer(data=request.data, context={'request': request})
+        serializer = InterestRequestSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save()  #
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
     
