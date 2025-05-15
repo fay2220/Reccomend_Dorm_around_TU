@@ -36,7 +36,7 @@ class InterestRequestView(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
     
-    def patch(self, request, pk):  # ✅ ต้องรับ pk ด้วย
+    def patch(self, request, pk):  
         try:
             instance = InterestRequest.objects.get(pk=pk)
         except InterestRequest.DoesNotExist:
