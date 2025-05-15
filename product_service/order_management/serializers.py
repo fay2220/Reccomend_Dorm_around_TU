@@ -1,3 +1,5 @@
+from rest_framework import serializers
+from .models import InterestRequest
 from product_management.models import Dorm
 
 class InterestRequestSerializer(serializers.ModelSerializer):
@@ -6,6 +8,7 @@ class InterestRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = InterestRequest
         fields = '__all__'
+        read_only_fields = ['user', 'dorm'] 
 
     def validate(self, data):
         required_fields = ['username', 'email', 'tel', 'address', 'zone']
@@ -16,13 +19,15 @@ class InterestRequestSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         request = self.context.get('request')
-        user = request.user if request else None
-
-        # ดึง dorm จาก id ที่อยู่ใน initial data
         dorm_id = self.initial_data.get('dorm_id')
+
         try:
             dorm = Dorm.objects.get(pk=dorm_id)
         except Dorm.DoesNotExist:
             raise serializers.ValidationError({'dorm_id': 'ไม่พบหอพักที่เลือก'})
 
-        return InterestRequest.objects.create(user=user, dorm=dorm, **validated_data)
+        return InterestRequest.objects.create(
+            user=request.user,
+            dorm=dorm,
+            **validated_data
+        )
