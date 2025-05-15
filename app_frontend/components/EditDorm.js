@@ -14,7 +14,7 @@ export default function EditDormForm() {
 
   useEffect(() => {
     if (zone) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/zone/${zone}`)
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/zone/${zone}/`)
         .then((res) => res.json())
         .then((data) => setDormList(data));
     } else {
@@ -122,7 +122,7 @@ export default function EditDormForm() {
 
   const handleDelete = async () => {
     if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบหอพักนี้?')) {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dorm/${selectedDormId}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/dorm/${selectedDormId}/`, {
         method: 'DELETE',
       });
       alert('ลบสำเร็จ');
