@@ -66,7 +66,7 @@ export default function NavbarWithSidebar() {
         // Decode JWT เพื่อดูว่าเป็น superuser หรือไม่
         try {
           const decoded = jwtDecode(data.access);
-          console.log("🎯 decoded JWT:", decoded);
+          console.log("decoded JWT:", decoded);
           console.log("decoded is_superuser =>", decoded.is_superuser);
   
           const usernameFromToken = decoded.username || username;
