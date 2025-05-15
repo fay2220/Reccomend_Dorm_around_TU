@@ -19,7 +19,7 @@ export default function FloatingRegisterButton() {
     tel: '',
     address: '',
   });
-  
+
   const handleOpen = () => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
@@ -54,10 +54,10 @@ export default function FloatingRegisterButton() {
 
     const payload = {
       dorm_id: selectedDormId,
-      zone: zone,
+      zone,
       status: 'รอดำเนินการ',
-      message: message,
-      ...formData,
+      message,
+      ...formData, // username, email, tel, address
     };
 
     try {
@@ -155,7 +155,7 @@ export default function FloatingRegisterButton() {
               <>
                 <input
                   name="username"
-                  placeholder="ชื่อผู้ใช้ (ต้องตรงกับชื่อบัญชีของคุณ)"
+                  placeholder="ชื่อผู้ใช้"
                   className="w-full border p-2"
                   value={formData.username}
                   onChange={handleChange}
@@ -181,7 +181,6 @@ export default function FloatingRegisterButton() {
                   value={formData.address}
                   onChange={handleChange}
                 />
-
                 <div className="flex justify-end gap-2">
                   <button
                     onClick={() => setStep(1)}
