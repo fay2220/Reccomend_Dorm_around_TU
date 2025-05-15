@@ -100,7 +100,7 @@ export default function AdminRequestPage() {
   
     try {
       console.log(`📝 PATCH request id=${id}:`, payload);
-      await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/api/request-interest/${id}/`, payload, {
+      await axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/request-interest/${id}/`, payload, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchRequests(); // รีเฟรชหลังอัปเดต
