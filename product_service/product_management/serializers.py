@@ -30,6 +30,7 @@ class DormSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         images_data = validated_data.pop('images', [])
         room_types_data = validated_data.pop('room_types', [])
+        validated_data.pop('id', None)
 
         dorm = Dorm.objects.create(**validated_data)
 
