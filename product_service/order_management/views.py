@@ -1,4 +1,3 @@
-
 # order_management/views.py
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -17,19 +16,6 @@ from .serializers import InterestRequestSerializer
 
 class InterestRequestView(APIView):
     permission_classes = [IsAuthenticated]
-    class Meta:
-        model = InterestRequest
-        fields = '__all__'
-
-    def get_dorm_name(self, obj):
-        return obj.dorm.name if obj.dorm else None
-    def validate(self, data):
-        required_fields = ['username', 'email', 'tel', 'address', 'zone', 'dorm_id']
-        for field in required_fields:
-            if not data.get(field):
-                raise serializers.ValidationError({field: "This field is required."})
-        return data
-
 
     def get(self, request):
         user = request.user
@@ -43,18 +29,12 @@ class InterestRequestView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
-        if not request.user or not request.user.is_authenticated:
-            return Response({'error': 'Authentication required'}, status=401)
-    
         serializer = InterestRequestSerializer(data=request.data)
         if serializer.is_valid():
-            try:
-                serializer.save(user=request.user)
-                return Response(serializer.data, status=201)
-            except Exception as e:
-                print("Save failed:", e)
-                return Response({'error': str(e)}, status=500)
+            serializer.save(user=request.user) 
+            return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
+    
     def patch(self, request, pk):  
         try:
             instance = InterestRequest.objects.get(pk=pk)
