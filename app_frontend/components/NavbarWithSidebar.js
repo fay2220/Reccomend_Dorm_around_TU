@@ -151,19 +151,28 @@ export default function NavbarWithSidebar() {
     try {
       const decoded = jwtDecode(token);
 
-      const currentTime = Date.now() / 1000; 
+      const currentTime = Date.now() / 1000;
       if (decoded.exp < currentTime) {
         // Token หมดอายุ
-        console.warn("Token expired, logging out...");
-        handleLogout();
-      } else {
-        setCurrentUser(decoded.username);
-        setIsSuperUser(decoded.is_superuser === true);
-        console.log("loaded from localStorage:", decoded);
+        console.warn("Token expired. Logging out.");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("username");
+        setCurrentUser(null);
+        setIsSuperUser(false);
+        return;
       }
+
+      setCurrentUser(decoded.username);
+      setIsSuperUser(decoded.is_superuser === true);
+      console.log("loaded from localStorage:", decoded);
     } catch (e) {
       console.warn("JWT decode failed", e);
-      handleLogout(); 
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("username");
+      setCurrentUser(null);
+      setIsSuperUser(false);
     }
   }
 }, []);
