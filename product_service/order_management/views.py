@@ -39,7 +39,7 @@ class InterestRequestView(APIView):
             requests = InterestRequest.objects.filter(username=user.username).order_by('-created_at')
 
         serializer = InterestRequestSerializer(requests, many=True)
-        print("📦 คำร้องที่แสดง:", serializer.data)
+        print("คำร้องที่แสดง:", serializer.data)
         return Response(serializer.data)
 
     def post(self, request):
